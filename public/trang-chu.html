@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <title>Trang chủ – DKHP</title>
+</head>
+<body>
+  <h1 id="chao">Xin chào</h1>
+  <form id="formDangKy">
+    <input id="maLop" placeholder="Mã lớp (VD: CSDL01)">
+    <button id="btnDangKy" type="submit">Đăng ký</button>
+  </form>
+  <p id="thongBao"></p>
+
+  <script>
+    const mssv = localStorage.getItem('mssv');
+    document.getElementById('chao').textContent = 'Xin chào ' + mssv;
+
+    document.getElementById('formDangKy').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const res = await fetch('/api/dang-ky', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ mssv, maLop: document.getElementById('maLop').value }),
+      });
+      const data = await res.json();
+      document.getElementById('thongBao').textContent = data.message;
+    });
+  </script>
+</body>
+</html>

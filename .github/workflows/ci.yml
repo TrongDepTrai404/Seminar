@@ -1,0 +1,40 @@
+# Người 5: mỗi lần push / mở Pull Request -> GitHub tự chạy toàn bộ test
+name: Kiem thu tu dong
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Cai thu vien
+        run: npm ci
+
+      - name: Unit test + API test (kem do phu code)
+        run: npm run test:coverage
+
+      - name: Cai trinh duyet cho Playwright
+        run: npx playwright install --with-deps chromium ffmpeg
+
+      - name: E2E test
+        run: npm run test:e2e
+
+      - name: Luu bao cao (xem o tab Actions)
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: bao-cao-test
+          path: |
+            coverage/
+            playwright-report/

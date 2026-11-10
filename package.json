@@ -1,0 +1,22 @@
+{
+  "name": "dkhp-kiem-thu-tu-dong",
+  "version": "1.0.0",
+  "description": "Demo kiểm thử tự động trên hệ thống đăng ký học phần thu nhỏ (seminar CNPM)",
+  "main": "src/server.js",
+  "scripts": {
+    "start": "node src/server.js",
+    "test": "jest",
+    "test:coverage": "jest --coverage",
+    "test:e2e": "playwright test",
+    "test:e2e:headed": "playwright test --headed",
+    "test:all": "jest && playwright test"
+  },
+  "dependencies": {
+    "express": "^5.3.0"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.65.0",
+    "jest": "^30.5.2",
+    "supertest": "^7.3.2"
+  }
+}
