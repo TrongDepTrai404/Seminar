@@ -2,18 +2,29 @@
 <html lang="vi">
 <head>
   <meta charset="UTF-8">
-  <title>Đăng nhập – DKHP</title>
-  <!-- Trang mẫu tối giản để chạy E2E test. Thay bằng trang đăng nhập thật của nhóm,
-       nhớ giữ nguyên các id: mssv, matKhau, btnDangNhap, loi -->
+  <title>Đăng nhập – Đăng ký học phần</title>
+  <link rel="stylesheet" href="style.css">
+  <!-- Giữ nguyên các id: mssv, matKhau, btnDangNhap, loi (test E2E dùng) -->
 </head>
 <body>
-  <h1>Đăng nhập</h1>
-  <form id="formDangNhap">
-    <input id="mssv" placeholder="MSSV">
-    <input id="matKhau" type="password" placeholder="Mật khẩu">
-    <button id="btnDangNhap" type="submit">Đăng nhập</button>
-  </form>
-  <p id="loi" style="color:red"></p>
+  <div class="thanh-tren">
+    <span class="ten-he-thong">Hệ thống đăng ký học phần</span>
+  </div>
+
+  <div class="the the-dang-nhap">
+    <h1>Đăng nhập</h1>
+    <form id="formDangNhap">
+      <label for="mssv">Mã số sinh viên</label>
+      <input id="mssv" placeholder="VD: SV001">
+
+      <label for="matKhau">Mật khẩu</label>
+      <input id="matKhau" type="password" placeholder="Mật khẩu">
+
+      <button id="btnDangNhap" type="submit">Đăng nhập</button>
+    </form>
+    <p id="loi" class="thong-bao loi"></p>
+    <p class="goi-y">Tài khoản demo: SV001 / 123456</p>
+  </div>
 
   <script>
     document.getElementById('formDangNhap').addEventListener('submit', async (e) => {
@@ -29,6 +40,7 @@
       const data = await res.json();
       if (res.ok) {
         localStorage.setItem('mssv', data.mssv);
+        localStorage.setItem('hoTen', data.hoTen);
         window.location.href = 'trang-chu.html';
       } else {
         document.getElementById('loi').textContent = data.message;

@@ -7,12 +7,16 @@ const sinhVien = [
 ];
 
 const lopHocPhan = [
-  { maLop: 'CSDL01', soTinChi: 3, siSo: 10, siSoToiDa: 50, thu: 2, tietBatDau: 1, tietKetThuc: 3 },
-  { maLop: 'CNPM01', soTinChi: 3, siSo: 50, siSoToiDa: 50, thu: 3, tietBatDau: 1, tietKetThuc: 3 },
-  { maLop: 'HDH01', soTinChi: 3, siSo: 5, siSoToiDa: 50, thu: 2, tietBatDau: 2, tietKetThuc: 4 },
+  { maLop: 'CSDL01', tenMon: 'Cơ sở dữ liệu', soTinChi: 3, siSo: 10, siSoToiDa: 50, thu: 2, tietBatDau: 1, tietKetThuc: 3 },
+  { maLop: 'CNPM01', tenMon: 'Công nghệ phần mềm', soTinChi: 3, siSo: 50, siSoToiDa: 50, thu: 3, tietBatDau: 1, tietKetThuc: 3 },
+  { maLop: 'HDH01', tenMon: 'Hệ điều hành', soTinChi: 3, siSo: 5, siSoToiDa: 50, thu: 2, tietBatDau: 2, tietKetThuc: 4 },
 ];
 
 let dangKy = []; // { mssv, maLop }
+
+async function layDanhSachLop() {
+  return lopHocPhan;
+}
 
 async function timSinhVien(mssv) {
   return sinhVien.find((s) => s.mssv === mssv) || null;
@@ -33,4 +37,4 @@ async function themDangKy(mssv, maLop) {
   lopHocPhan.find((l) => l.maLop === maLop).siSo += 1;
 }
 
-module.exports = { timSinhVien, timLop, layLopDaDangKy, themDangKy };
+module.exports = { layDanhSachLop, timSinhVien, timLop, layLopDaDangKy, themDangKy };

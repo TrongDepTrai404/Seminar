@@ -1,0 +1,83 @@
+/* Giao diện đơn giản cho demo. Không đổi các id trong HTML vì test E2E dùng chúng. */
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  font-family: "Segoe UI", Arial, sans-serif;
+  background: #f1f5f9;
+  color: #1e293b;
+}
+
+.thanh-tren {
+  background: #1d4ed8;
+  color: #fff;
+  padding: 14px 32px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.thanh-tren .ten-he-thong { font-size: 18px; font-weight: 600; }
+.thanh-tren a { color: #fff; text-decoration: none; font-size: 14px; }
+
+.khung {
+  max-width: 820px;
+  margin: 32px auto;
+  padding: 0 16px;
+}
+
+.the {
+  background: #fff;
+  border-radius: 10px;
+  padding: 28px 32px;
+  box-shadow: 0 2px 10px rgba(15, 23, 42, 0.08);
+  margin-bottom: 24px;
+}
+
+.the-dang-nhap { max-width: 380px; margin: 80px auto; }
+
+h1 { font-size: 22px; margin: 0 0 20px; }
+h2 { font-size: 17px; margin: 0 0 16px; }
+
+label { display: block; font-size: 14px; margin-bottom: 6px; color: #475569; }
+
+input {
+  width: 100%;
+  padding: 10px 12px;
+  font-size: 15px;
+  border: 1px solid #cbd5e1;
+  border-radius: 6px;
+  margin-bottom: 16px;
+}
+input:focus { outline: 2px solid #93c5fd; border-color: #3b82f6; }
+
+button {
+  width: 100%;
+  padding: 11px;
+  font-size: 15px;
+  font-weight: 600;
+  color: #fff;
+  background: #1d4ed8;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+button:hover { background: #1e40af; }
+
+.form-ngang { display: flex; gap: 12px; }
+.form-ngang input { margin-bottom: 0; }
+.form-ngang button { width: 140px; flex-shrink: 0; }
+
+.goi-y { font-size: 13px; color: #64748b; margin-top: 14px; text-align: center; }
+
+/* Thông báo */
+.thong-bao { min-height: 22px; margin: 14px 0 0; font-weight: 500; }
+.loi { color: #dc2626; }
+.thanh-cong { color: #16a34a; }
+
+/* Bảng lớp học phần */
+table { width: 100%; border-collapse: collapse; font-size: 14px; }
+th, td { padding: 10px 12px; text-align: left; border-bottom: 1px solid #e2e8f0; }
+th { background: #f8fafc; color: #475569; font-weight: 600; }
+tbody tr { cursor: pointer; }
+tbody tr:hover { background: #eff6ff; }
+.day { color: #dc2626; font-weight: 600; }

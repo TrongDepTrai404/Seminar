@@ -5,6 +5,7 @@ const express = require('express');
 
 const authRoutes = require('./routes/auth.routes');
 const dangKyRoutes = require('./routes/dangKy.routes');
+const lopHocPhanRoutes = require('./routes/lopHocPhan.routes');
 
 const app = express();
 
@@ -13,5 +14,6 @@ app.use(express.static(path.join(__dirname, '..', 'public')));
 
 app.use('/api/auth', authRoutes);
 app.use('/api/dang-ky', dangKyRoutes);
+app.use('/api/lop-hoc-phan', lopHocPhanRoutes);
 
 module.exports = app;

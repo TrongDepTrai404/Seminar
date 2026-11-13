@@ -2,19 +2,76 @@
 <html lang="vi">
 <head>
   <meta charset="UTF-8">
-  <title>Trang chủ – DKHP</title>
+  <title>Trang chủ – Đăng ký học phần</title>
+  <link rel="stylesheet" href="style.css">
+  <!-- Giữ nguyên các id: chao, maLop, btnDangKy, thongBao (test E2E dùng) -->
 </head>
 <body>
-  <h1 id="chao">Xin chào</h1>
-  <form id="formDangKy">
-    <input id="maLop" placeholder="Mã lớp (VD: CSDL01)">
-    <button id="btnDangKy" type="submit">Đăng ký</button>
-  </form>
-  <p id="thongBao"></p>
+  <div class="thanh-tren">
+    <span class="ten-he-thong">Hệ thống đăng ký học phần</span>
+    <a href="login.html" id="dangXuat">Đăng xuất</a>
+  </div>
+
+  <div class="khung">
+    <div class="the">
+      <h1 id="chao">Xin chào</h1>
+      <form id="formDangKy" class="form-ngang">
+        <input id="maLop" placeholder="Nhập mã lớp hoặc bấm vào một dòng trong bảng (VD: CSDL01)">
+        <button id="btnDangKy" type="submit">Đăng ký</button>
+      </form>
+      <p id="thongBao" class="thong-bao"></p>
+    </div>
+
+    <div class="the">
+      <h2>Danh sách lớp học phần</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Mã lớp</th>
+            <th>Môn học</th>
+            <th>Tín chỉ</th>
+            <th>Lịch học</th>
+            <th>Sĩ số</th>
+          </tr>
+        </thead>
+        <tbody id="bangLop"></tbody>
+      </table>
+    </div>
+  </div>
 
   <script>
     const mssv = localStorage.getItem('mssv');
-    document.getElementById('chao').textContent = 'Xin chào ' + mssv;
+    const hoTen = localStorage.getItem('hoTen');
+    document.getElementById('chao').textContent =
+      'Xin chào ' + (hoTen ? hoTen + ' (' + mssv + ')' : mssv);
+
+    document.getElementById('dangXuat').addEventListener('click', () => {
+      localStorage.clear();
+    });
+
+    // Hiện bảng lớp học phần
+    async function taiDanhSachLop() {
+      const res = await fetch('/api/lop-hoc-phan');
+      const ds = await res.json();
+      const bang = document.getElementById('bangLop');
+      bang.innerHTML = '';
+      ds.forEach((lop) => {
+        const tr = document.createElement('tr');
+        const day = lop.siSo >= lop.siSoToiDa;
+        tr.innerHTML =
+          '<td>' + lop.maLop + '</td>' +
+          '<td>' + lop.tenMon + '</td>' +
+          '<td>' + lop.soTinChi + '</td>' +
+          '<td>Thứ ' + lop.thu + ', tiết ' + lop.tietBatDau + '–' + lop.tietKetThuc + '</td>' +
+          '<td class="' + (day ? 'day' : '') + '">' + lop.siSo + '/' + lop.siSoToiDa + (day ? ' (đầy)' : '') + '</td>';
+        // Bấm vào dòng -> điền sẵn mã lớp
+        tr.addEventListener('click', () => {
+          document.getElementById('maLop').value = lop.maLop;
+        });
+        bang.appendChild(tr);
+      });
+    }
+    taiDanhSachLop();
 
     document.getElementById('formDangKy').addEventListener('submit', async (e) => {
       e.preventDefault();
@@ -24,7 +81,10 @@
         body: JSON.stringify({ mssv, maLop: document.getElementById('maLop').value }),
       });
       const data = await res.json();
-      document.getElementById('thongBao').textContent = data.message;
+      const thongBao = document.getElementById('thongBao');
+      thongBao.textContent = data.message;
+      thongBao.className = 'thong-bao ' + (res.ok ? 'thanh-cong' : 'loi');
+      if (res.ok) taiDanhSachLop(); // cập nhật sĩ số
     });
   </script>
 </body>
