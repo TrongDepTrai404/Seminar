@@ -1,0 +1,53 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\ASUS\\Desktop\\cnpm\\Seminar\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\ASUS\\Desktop\\cnpm\\Seminar\\tests\\api\\dangKy.test.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:tests\\api\\dangKy.test.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\ASUS\\Desktop\\cnpm\\Seminar\\tests\\api\\auth.test.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:tests\\api\\auth.test.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 0,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "dangKy.test.js",
+              "DocumentMoniker": "C:\\Users\\ASUS\\Desktop\\cnpm\\Seminar\\tests\\api\\dangKy.test.js",
+              "RelativeDocumentMoniker": "tests\\api\\dangKy.test.js",
+              "ToolTip": "C:\\Users\\ASUS\\Desktop\\cnpm\\Seminar\\tests\\api\\dangKy.test.js",
+              "RelativeToolTip": "tests\\api\\dangKy.test.js",
+              "ViewState": "AgIAAGAAAAAAAAAAAAAAAGoAAAAlAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001646|",
+              "WhenOpened": "2026-11-13T13:33:02.809Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "auth.test.js",
+              "DocumentMoniker": "C:\\Users\\ASUS\\Desktop\\cnpm\\Seminar\\tests\\api\\auth.test.js",
+              "RelativeDocumentMoniker": "tests\\api\\auth.test.js",
+              "ToolTip": "C:\\Users\\ASUS\\Desktop\\cnpm\\Seminar\\tests\\api\\auth.test.js",
+              "RelativeToolTip": "tests\\api\\auth.test.js",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001646|",
+              "WhenOpened": "2026-11-13T13:32:37.842Z"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

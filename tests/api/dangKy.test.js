@@ -91,3 +91,86 @@ describe('POST /api/dang-ky', () => {
     expect(res.body.canhBao).toBeTruthy();
   });
 });
+
+// ---- Test bổ sung (mở rộng) ----
+describe('POST /api/dang-ky - bổ sung', () => {
+  test('thiếu MSSV → 400, không gọi DB', async () => {
+    const res = await request(app).post('/api/dang-ky').send({ maLop: 'CSDL01' });
+
+    expect(res.status).toBe(400);
+    expect(db.timLop).not.toHaveBeenCalled();
+  });
+
+    test('không gửi body → 400, không gọi DB', async () => {
+        const res = await request(app).post('/api/dang-ky');
+
+        expect(res.status).toBe(400);
+        expect(db.timLop).not.toHaveBeenCalled();
+    });
+
+  test('DB lỗi khi tìm lớp → 500, không lưu', async () => {
+    db.timLop.mockRejectedValue(new Error('mất kết nối'));
+
+    const res = await dangKy();
+
+    expect(res.status).toBe(500);
+    expect(db.themDangKy).not.toHaveBeenCalled();
+  });
+
+  test('DB lỗi khi lưu đăng ký → 500', async () => {
+    db.timLop.mockResolvedValue(lop());
+    db.themDangKy.mockRejectedValue(new Error('ghi thất bại'));
+
+    const res = await dangKy();
+
+    expect(res.status).toBe(500);
+  });
+
+  test('truyền đúng MSSV và mã lớp xuống DB', async () => {
+    db.timLop.mockResolvedValue(lop());
+
+    await dangKy();
+
+    expect(db.timLop).toHaveBeenCalledWith('CSDL01');
+    expect(db.layLopDaDangKy).toHaveBeenCalledWith('SV001');
+  });
+
+  test('biên sĩ số: còn đúng 1 chỗ (49/50) → vẫn đăng ký được', async () => {
+    db.timLop.mockResolvedValue(lop({ siSo: 49, siSoToiDa: 50 }));
+
+    const res = await dangKy();
+
+    expect(res.status).toBe(201);
+  });
+
+  test('biên tín chỉ trên: tổng đúng 25 → 201, không cảnh báo', async () => {
+    db.timLop.mockResolvedValue(lop()); // 3 tín chỉ
+    db.layLopDaDangKy.mockResolvedValue([lop({ maLop: 'X', soTinChi: 22, thu: 5 })]);
+
+    const res = await dangKy();
+
+    expect(res.status).toBe(201);
+    expect(res.body.canhBao).toBeNull();
+  });
+
+  test('biên tín chỉ dưới: tổng đúng 14 → 201, không cảnh báo', async () => {
+    db.timLop.mockResolvedValue(lop()); // 3 tín chỉ
+    db.layLopDaDangKy.mockResolvedValue([lop({ maLop: 'X', soTinChi: 11, thu: 5 })]);
+
+    const res = await dangKy();
+
+    expect(res.status).toBe(201);
+    expect(res.body.canhBao).toBeNull();
+  });
+
+  test('cùng thứ nhưng tiết liền kề, không giao nhau (1-3 và 4-6) → không trùng', async () => {
+    db.timLop.mockResolvedValue(lop()); // thứ 2, tiết 1-3
+    db.layLopDaDangKy.mockResolvedValue([
+      lop({ maLop: 'Y', soTinChi: 12, tietBatDau: 4, tietKetThuc: 6 }),
+    ]);
+
+    const res = await dangKy();
+
+    expect(res.status).toBe(201);
+  });
+});
