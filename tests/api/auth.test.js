@@ -57,3 +57,40 @@ describe('POST /api/auth/login', () => {
     expect(res.status).toBe(500);
   });
 });
+
+// ---- Test bổ sung (mở rộng) ----
+describe('POST /api/auth/login - bổ sung', () => {
+  test('thiếu MSSV (chỉ có mật khẩu) → 400, không gọi DB', async () => {
+    const res = await request(app).post('/api/auth/login').send({ matKhau: '123456' });
+
+    expect(res.status).toBe(400);
+    expect(db.timSinhVien).not.toHaveBeenCalled();
+  });
+
+  test('chuỗi rỗng → 400, không gọi DB', async () => {
+    const res = await request(app)
+      .post('/api/auth/login')
+      .send({ mssv: '', matKhau: '' });
+
+    expect(res.status).toBe(400);
+    expect(db.timSinhVien).not.toHaveBeenCalled();
+  });
+
+  test('không gửi body → 400, không gọi DB', async () => {
+    const res = await request(app).post('/api/auth/login');
+
+    expect(res.status).toBe(400);
+    expect(db.timSinhVien).not.toHaveBeenCalled();
+  });
+
+  test('đăng nhập thành công → hỏi DB đúng MSSV và KHÔNG trả mật khẩu về', async () => {
+    db.timSinhVien.mockResolvedValue({ mssv: 'SV001', hoTen: 'Nguyễn Văn A', matKhau: '123456' });
+
+    const res = await request(app)
+      .post('/api/auth/login')
+      .send({ mssv: 'SV001', matKhau: '123456' });
+
+    expect(db.timSinhVien).toHaveBeenCalledWith('SV001');
+    expect(res.body).not.toHaveProperty('matKhau');
+  });
+});
